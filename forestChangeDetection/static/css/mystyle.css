@@ -1,0 +1,88 @@
+body{
+    padding: 0px;
+    margin: 0px;
+    background-color : red;
+}
+nav.navbar{
+    height: min-content;
+}
+hr.divisor{
+    padding: 0px;
+    margin: 0px;
+    height: 1px;
+    color: green;
+    border-style:solid;
+    border-color:green;
+    background: #CCC;
+}
+
+div.upper-left{
+    height : 250px; 
+    border-left: 6px solid green;
+    
+}
+
+div.upper-right{
+    font-size: 12px;
+}
+
+div.lower-left{
+    
+}
+
+#mapid { height: 50vh; }
+
+#nav-tab{
+    font-size: 10px;
+    /* height: 20px; */
+}
+
+div.tab-pane{
+    font-size: 10px;
+    height : 12px;
+}
+
+span.input-group-text{
+    font-size: 10px;
+}
+div.checkbox-title{
+    background-color: cornsilk;
+    padding: 0px;
+    margin: 0px;
+}
+label.checkbox-title{
+    font-size: 14px;
+    font-weight: bold;
+    text-shadow: brown; 
+    
+}
+label.checkbox-lineline{
+    margin-bottom: 2px;
+}
+
+select.form-control{
+    font-size: 10px;
+}
+
+label.select-title{
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+div.lower-middle{
+    padding-top: 0px;
+    margin-top: 0px;
+    border-left: 3px solid green;
+    border-right: 3px solid green;
+    height:37vh;
+}
+
+#drop_zone{
+    padding-top: 3px;
+    background-color: #EEE;
+    border: #999 1px dashed;
+    width: 120px;
+    height: 40px;
+    padding: 9px;
+    font-size: 12px;
+}

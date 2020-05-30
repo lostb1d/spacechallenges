@@ -1,0 +1,159 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" maximum-scale="1">
+    <title>Project</title>
+    <link rel="icon" type="image/png" href="{% static "img/fav.png" %}">
+    <link href = "{% static "css/mystyle.css" %}" rel="stylesheet" type="text/css">
+    <link href = "{% static "css/dropzone.css" %}" rel="stylesheet" type="text/css">
+    <!-- jqquery cdn  -->
+    <script src="{% static "js/jquery.js" %}"></script>
+    <!-- ------------ bootstrap ------------  -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
+
+    <!-- --------- javascript ----------  -->
+    <script src={% static "js/main.js" %}></script>
+    <script src={% static "js/dropzone.js" %}></script>
+    <script src="{% static "js/nepal_district.geojson" %}"></script>
+    
+    {% comment %} ---------- drag drop -----------  {% endcomment %}
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
+    
+
+
+    {% comment %} ------- leaflet -------------  {% endcomment %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+   crossorigin=""></script>
+ 
+</head>
+<body>
+    <nav class="navbar navbar-light bg-warning ">
+        <a href="index.html" class="navbar-brand"><b>Geoneer</b> | Food for Thoughts</a>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="username">
+          <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="password">
+          <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        </form>
+      </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2 upper-left">
+
+                 <div class='row'>
+
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#nav-first" role="tab" aria-controls="nav-first" aria-selected="true">Choose</a>
+            <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#nav-second" role="tab" aria-controls="nav-second" aria-selected="false">Import</a>
+            <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#nav-third" role="tab" aria-controls="nav-third" aria-selected="false">Draw</a>
+          </div>
+        </nav>
+      </div>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-first" role="tabpanel" aria-labelledby="nav-first-tab">
+            <div class="form-group">
+            <label class="select-title" for="province">Select ROI:</label>
+            <select class="form-control" id="province" onchange="populate_district(this.id,district)">
+              <option>Province One</option>
+              <option>Province Two</option>
+              <option>Bagmati</option>
+              <option>Gandaki</option>
+              <option>Province 5</option>
+              <option>Sudur Pashchim</option>
+              <option>Karnali</option>
+            </select>
+            <label class="select-title" for="province"> District:</label>
+            <select class="form-control" id="district" onchanged="abc(this.id)">
+            
+            </select>
+            
+          </div>
+         </div>
+
+          
+
+        <div class="tab-pane fade" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
+         <div class="file-upload-wrapper">
+          <input type="file" id="input-file-now" class="file-upload" />
+</div>
+      
+        </div>
+
+          <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
+        
+        </div>
+
+      </div>
+            {% comment %} ----------- upto here ------------  {% endcomment %}
+         </div>
+
+           
+            <div class="col-lg-8 upper-middle" id="mapid">
+                
+            </div>
+            <div class="col-lg-2 upper-right">
+                <div class="checkbox-title"><label class="checkbox-title">Layers</label><br></div>
+                 <label class="checkbox-inline"><input type="checkbox" value="">Forest Loss</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="">Forest Gain</label><br>
+                <label class="checkbox-inline"><input type="checkbox" value="">Forest Biomass</label>
+            </div>
+        </div>
+        <hr class="divisor">
+        <div class="row">
+            <div class="col-lg-2 lower-left">
+                Div 4
+            </div>
+            <div class="col-lg-8 lower-middle">
+               <div class='row'>
+                  <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                      <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#detail-first" role="tab" aria-controls="nav-first" aria-selected="true">Item One</a>
+                      <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#detail-second" role="tab" aria-controls="nav-second" aria-selected="false">Item Two</a>
+                      <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-third" role="tab" aria-controls="nav-third" aria-selected="false">Item Three</a>
+                      <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-fourth" role="tab" aria-controls="nav-third" aria-selected="false">Item Four</a>
+                      <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-fifth" role="tab" aria-controls="nav-third" aria-selected="false">Item Five</a>
+                    </div>
+                  </nav>
+                </div>
+                <div class="tab-pane fade show active" id="detail-first" role="tabpanel" aria-labelledby="nav-first-tab">
+
+                <h1>Heading One</h1>
+                </div>
+                <div class="tab-pane fade" id="detail-second" role="tabpanel" aria-labelledby="nav-second-tab">
+                <h2>Heading Two</h2>
+              </div>
+
+              <div class="tab-pane fade" id="detail-third" role="tabpanel" aria-labelledby="nav-third-tab">
+                <h3>Heading Three</h3>
+              </div>
+              <div class="tab-pane fade" id="detail-fourth" role="tabpanel" aria-labelledby="nav-third-tab">
+                <h4>Heading Four</h4>
+              </div>
+              <div class="tab-pane fade" id="detail-fifth" role="tabpanel" aria-labelledby="nav-third-tab">
+                <h5>Heading Five</h5>
+              </div>
+                  </div>
+            <div class="col-lg-2 lower-right">
+                Div 6
+            </div>
+        </div>
+    </div>
+    <script src="{% static "js/map.js" %}"></script>
+    
+</body>
+</html>
