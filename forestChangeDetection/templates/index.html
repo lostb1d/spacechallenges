@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" maximum-scale="1">
     <title>Geoneer | Food for Thoughts</title>
     <link rel="icon" type="image/png" href="{% static "img/fav.png" %}">
+    <link rel="stylesheet" href="{% static "css/layout.css" %}">
     <link href = "{% static "css/mystyle.css" %}" rel="stylesheet" type="text/css">
     <link href = "{% static "css/dropzone.css" %}" rel="stylesheet" type="text/css">
     <!-- jqquery cdn  -->
@@ -29,7 +30,6 @@
  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
-   <link rel="stylesheet" href="{% static "css/layout.css" %}">
 </head>
 <body>
   <div id="top">
@@ -139,6 +139,81 @@
     <script src="{% static "js/nepal_district.geojson" %}"></script>
     <script src="{% static "js/map.js" %}"></script>
     <script>
+      var mymap = L.map('mapid').setView([28.319,83.903], 6);
+      var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoibG9zdGIxIiwiYSI6ImNqaTBjcGd4bjE2cGMza3M2MWEzcTRwd3gifQ.Ps6yKHol2bmEPndMSeYKKw'
+      }).addTo(mymap);
+
+      var CO_emission = L.tileLayer('{{ tile }} ', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
+
+      var baseMaps1 = {
+          "OSM" :basemap,
+      };
+      var RenderedMap = {
+          "CO Emission" :CO_emission,
+      };
+      L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
+
+      function getData(){
+        var inputNode = document.createElement('input');
+            inputNode.setAttribute('type','file');
+            inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
+            inputNode.setAttribute('accept','.geojson');
+
+            inputNode.addEventListener("change", function(e){
+              var files = inputNode.files;
+              var file = files[0];
+              var reader = new FileReader();
+              reader.onload = function() {
+                var geo = omnivore.geojson(reader.result)
+                .on('ready',function(){
+                    mymap.fitBounds(geo.getBounds());
+                  })
+                .addTo(mymap);
+                };
+              reader.readAsDataURL(file);
+            });
+            inputNode.click();
+      };
+      function draw(){
+        var drawnItems = new L.FeatureGroup();
+        mymap.addLayer(drawnItems);
+        var drawControl = new L.Control.Draw({
+              // position: 'topright',
+            draw: {
+                polygon: false,
+                polyline: false,
+                rect: {
+                shapeOptions: {
+                  color: 'green'
+                },
+                },
+                circle: false,
+                circlemarker: false,
+                marker: false
+              },
+                edit: {
+                    featureGroup: drawnItems,
+                    edit: false
+                }
+            });
+        mymap.addControl(drawControl);
+        mymap.on('draw:created', function (e) {
+                    drawnItems.addLayer(e.layer);
+                });
+        mymap.on(L.Draw.Event.CREATED, function (e) {
+            var layer = e.layer;
+        mymap.addLayer(layer);
+        });
+      };
       $(document).ready(function () {
             $('#a-container').layout({
               south__size: .30,
