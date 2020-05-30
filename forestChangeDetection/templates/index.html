@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" maximum-scale="1">
     <title>Geoneer | Food for Thoughts</title>
     <link rel="icon" type="image/png" href="{% static "img/fav.png" %}">
-    <link rel="stylesheet" href="{% static "css/layout.css" %}">
     <link href = "{% static "css/mystyle.css" %}" rel="stylesheet" type="text/css">
     <link href = "{% static "css/dropzone.css" %}" rel="stylesheet" type="text/css">
     <!-- jqquery cdn  -->
@@ -30,6 +29,7 @@
  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
+   <link rel="stylesheet" href="{% static "css/layout.css" %}">
 </head>
 <body>
   <div id="top">
@@ -163,43 +163,49 @@
       L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
 
       function getData(){
-        var inputNode = document.createElement('input');
-            inputNode.setAttribute('type','file');
-            inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
-            inputNode.setAttribute('accept','.geojson');
+    var inputNode = document.createElement('input');
+        inputNode.setAttribute('type','file');
+        inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
+        inputNode.setAttribute('accept','.geojson');
 
-            inputNode.addEventListener("change", function(e){
-              var files = inputNode.files;
-              var file = files[0];
-              var reader = new FileReader();
-              reader.onload = function() {
-                var geo = omnivore.geojson(reader.result)
-                .on('ready',function(){
-                    mymap.fitBounds(geo.getBounds());
-                  })
-                .addTo(mymap);
-                };
-              reader.readAsDataURL(file);
-            });
-            inputNode.click();
-      };
-      function draw(){
-        var drawnItems = new L.FeatureGroup();
+        inputNode.addEventListener("change", function(e){
+          var files = inputNode.files;
+          var file = files[0];
+          var reader = new FileReader();
+          reader.onload = function() {
+            var geo = omnivore.geojson(reader.result)
+            .on('ready',function(){
+                mymap.fitBounds(geo.getBounds());
+              })
+            .addTo(mymap);
+            };
+          reader.readAsDataURL(file);
+        });
+        inputNode.click();
+  }
+var drawnItems;
+function draw(){
+    if(drawnItems==undefined){
+        drawnItems = new L.FeatureGroup();
         mymap.addLayer(drawnItems);
         var drawControl = new L.Control.Draw({
-              // position: 'topright',
+            // position: 'topright',
             draw: {
-                polygon: false,
+                polygon:  {
+                    shapeOptions: {
+                     color: 'red'
+                    },
+                   },
                 polyline: false,
                 rect: {
                 shapeOptions: {
-                  color: 'green'
+                color: 'green'
                 },
                 },
                 circle: false,
                 circlemarker: false,
                 marker: false
-              },
+            },
                 edit: {
                     featureGroup: drawnItems,
                     edit: false
@@ -213,7 +219,8 @@
             var layer = e.layer;
         mymap.addLayer(layer);
         });
-      };
+    }else{return;}
+}
       $(document).ready(function () {
             $('#a-container').layout({
               south__size: .30,
