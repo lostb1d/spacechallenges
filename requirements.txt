@@ -1,0 +1,10 @@
+Need to install Anaconda 
+
+Django -> conda install django
+
+GEE Python Api 
+To install this package with conda run one of the following:
+conda install -c conda-forge earthengine-api
+conda install -c conda-forge/label/gcc7 earthengine-api
+conda install -c conda-forge/label/cf201901 earthengine-api
+conda install -c conda-forge/label/cf202003 earthengine-api

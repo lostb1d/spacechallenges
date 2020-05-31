@@ -3,10 +3,13 @@ from django.shortcuts import render, HttpResponse
 import ee
 ee.Initialize()
 import os
+from datetime import date , timedelta
+from datetime import datetime
+from dateutil.parser import parse
+import pandas as pd
 # Create your views here.
 
 def index(request):
-    
     geometry = ee.Geometry.Polygon([[[84.97873462030498, 27.87424989960898],
         [84.74527514764873, 27.563032482426987],
         [85.20670092889873, 27.385144636789754],
@@ -18,7 +21,10 @@ def index(request):
         [85.29733813592998, 27.910662458572368]]])
 
     context = {
-        "tile" : getTile(geometry),
+        # "tile2020" : getTile2020(geometry),
+        "tile2019" : getTile2019(geometry),
+        "tile2018" : getTile2018(geometry),
+        "tile2017" : getTile2017(geometry),
         "band_viz" : getVisParam(),
         # "form" : form,
         "title" : "Carbon Monoxide Emission",
@@ -36,7 +42,25 @@ def getVisParam():
     }
     return viz_param
 
-def getTile(geometry):
+def getTile2017(geometry):
+    transplanting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2017-06-16','2017-07-15').median().clip(geometry).select('B8')
+    harvesting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2017-09-16','2017-10-15').median().clip(geometry).select('B8')
+    pmi = index_calculation(harvesting , transplanting)
+    viz_param = getVisParam()
+    map_id_dict = ee.Image(pmi).getMapId(viz_param)
+    tile = str(map_id_dict['tile_fetcher'].url_format)
+    return tile
+
+def getTile2018(geometry):
+    transplanting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2018-06-16','2018-07-15').median().clip(geometry).select('B8')
+    harvesting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2018-09-16','2018-10-15').median().clip(geometry).select('B8')
+    pmi = index_calculation(harvesting , transplanting)
+    viz_param = getVisParam()
+    map_id_dict = ee.Image(pmi).getMapId(viz_param)
+    tile = str(map_id_dict['tile_fetcher'].url_format)
+    return tile
+
+def getTile2019(geometry):
     transplanting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2019-06-16','2019-07-15').median().clip(geometry).select('B8')
     harvesting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2019-09-16','2019-10-15').median().clip(geometry).select('B8')
     pmi = index_calculation(harvesting , transplanting)
@@ -44,6 +68,15 @@ def getTile(geometry):
     map_id_dict = ee.Image(pmi).getMapId(viz_param)
     tile = str(map_id_dict['tile_fetcher'].url_format)
     return tile
+
+# def getTile2020(geometry):
+#     transplanting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2020-06-16','2020-07-15').median().clip(geometry).select('B8')
+#     harvesting = ee.ImageCollection('COPERNICUS/S2_SR').filterDate('2020-09-16','2020-10-15').median().clip(geometry).select('B8')
+#     pmi = index_calculation(harvesting , transplanting)
+#     viz_param = getVisParam()
+#     map_id_dict = ee.Image(pmi).getMapId(viz_param)
+#     tile = str(map_id_dict['tile_fetcher'].url_format)
+#     return tile
 
 def index_calculation(a,b):
     return a.subtract(b).divide(a.add(b))
