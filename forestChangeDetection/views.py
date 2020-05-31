@@ -1,9 +1,18 @@
 from django.shortcuts import render, HttpResponse
+from forestChangeDetection.forms import ImportGeojsonfileForm
 
 import ee
 ee.Initialize()
 import os
 # Create your views here.
+
+def geojson_import(request):
+    if request.method == "POST":
+        form = ImportGeojsonfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            geoJson = request.FILES['import_file']
+
+
 
 def index(request):
     
