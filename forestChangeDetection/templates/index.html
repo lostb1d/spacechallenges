@@ -73,11 +73,9 @@
           </div>
         </div>
         <div class="tab-pane fade" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
-          <div class="file-upload-wrapper">
-            <button class="btn btn-primary" onclick="getData()">Upload File</button>
-          </div>
-          <form enctype="multipart/form-data" method="post" action="import">
-            <input type="submit" value="Submit" id="sub" />
+          <form enctype="multipart/form-data" method="post" action="">
+            {{ form.as_p }}
+            <input type="submit"/>
           </form>
           </div>
             <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
@@ -151,41 +149,31 @@
           zoomOffset: -1,
           accessToken: 'pk.eyJ1IjoibG9zdGIxIiwiYSI6ImNqaTBjcGd4bjE2cGMza3M2MWEzcTRwd3gifQ.Ps6yKHol2bmEPndMSeYKKw'
       }).addTo(mymap);
-
-      var CO_emission = L.tileLayer('{{ tile }} ', {
+        var paddy2017 = L.tileLayer('{{ tile2017 }}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 24,
       }).addTo(mymap);
 
+      var paddy2018 = L.tileLayer('{{ tile2018 }}' , {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
+
+      var paddy2019 = L.tileLayer('{{ tile2019 }}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
+   
       var baseMaps1 = {
-          "OSM" :basemap,
+        "OSM" :basemap,
       };
-      var RenderedMap = {
-          "CO Emission" :CO_emission,
+      var overlayMaps = {
+        "Paddy 2017" :paddy2017,
+        "Paddy 2018" :paddy2018,
+        "Paddy 2019" :paddy2019,
       };
-      L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
+      var mylayer = L.control.layers(baseMaps1, overlayMaps).addTo(mymap);
 
-      function getData(){
-    var inputNode = document.createElement('input');
-        inputNode.setAttribute('type','file');
-        inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
-        inputNode.setAttribute('accept','.geojson');
-
-        inputNode.addEventListener("change", function(e){
-          var files = inputNode.files;
-          var file = files[0];
-          var reader = new FileReader();
-          reader.onload = function() {
-            var geo = omnivore.geojson(reader.result)
-            .on('ready',function(){
-                mymap.fitBounds(geo.getBounds());
-              })
-            .addTo(mymap);
-            };
-          reader.readAsDataURL(file);
-        });
-        inputNode.click();
-  }
 var drawnItems;
 function draw(){
     if(drawnItems==undefined){
