@@ -26,11 +26,6 @@ div.upper-right{
     font-size: 12px;
 }
 
-div.lower-left{
-    
-}
-
-#mapid { height: 50vh; }
 
 #nav-tab{
     font-size: 10px;
@@ -85,4 +80,28 @@ div.lower-middle{
     height: 40px;
     padding: 9px;
     font-size: 12px;
+}
+
+/* layout responsive style */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+#top{
+    height: 10vh;
+    width: 100vw;
+}
+#a-container{
+    height: 90vh;
+    width: 100vw;
+}
+#mapid{
+    height: 100%;
+    width: 100%;
+}
+.ui-layout-center, .ui-layout-west, .ui-layout-south, .ui-layout-east {
+    margin:  0!important;
+    padding: 0!important;
 }

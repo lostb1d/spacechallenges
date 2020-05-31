@@ -12,24 +12,13 @@
     <!-- ------------ bootstrap ------------  -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd" crossorigin="anonymous"></script>
 
-    <!-- --------- javascript ----------  -->
-    <script src={% static "js/main.js" %}></script>
-    <script src={% static "js/dropzone.js" %}></script>
-    <script src="{% static "js/nepal_district.geojson" %}"></script>
     
     {% comment %} ---------- drag drop -----------  {% endcomment %}
     <!-- Font Awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <!-- Google Fonts -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-<!-- Bootstrap core CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-<!-- Material Design Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.18.0/css/mdb.min.css" rel="stylesheet">
-    
-
 
     {% comment %} ------- leaflet -------------  {% endcomment %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
@@ -40,22 +29,22 @@
  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
    crossorigin=""></script>
+   <link rel="stylesheet" href="{% static "css/layout.css" %}">
 </head>
 <body>
+  <div id="top">
     <nav class="navbar navbar-light bg-warning ">
-        <a href="index.html" class="navbar-brand"><b>Geoneer</b> | Food for Thoughts <img src={% static "img/logo.png" %} height=40 alt="Logo"> </a>
-        <form class="form-inline">
-          <input class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="username">
-          <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="password">
-          <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit">Login</button>
-        </form>
-      </nav>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-2 upper-left">
-
-                 <div class='row'>
-
+      <a href="index.html" class="navbar-brand"><b>Geoneer</b> | Food for Thoughts <img src={% static "img/logo.png" %} height=40 alt="Logo"> </a>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="text" placeholder="Username" aria-label="username">
+        <input class="form-control mr-sm-2" type="password" placeholder="Password" aria-label="password">
+        <button class="btn btn-sm btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+      </form>
+    </nav>
+  </div>
+  <div id="a-container">
+    <div class="ui-layout-west">
+      <div class='row'>
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#nav-first" role="tab" aria-controls="nav-first" aria-selected="true">Choose</a>
@@ -63,165 +52,174 @@
             <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#nav-third" role="tab" aria-controls="nav-third" aria-selected="false" onclick="draw()">Draw</a>
           </div>
         </nav>
-      </div>
-      <div class="tab-content" id="nav-tabContent">
+    </div>
+    <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-first" role="tabpanel" aria-labelledby="nav-first-tab">
             <div class="form-group">
-            <label class="select-title" for="province">Select ROI:</label>
-            <select class="form-control" id="province" onchange="populate_district(this.id,district)">
-              <option>Province One</option>
-              <option>Province Two</option>
-              <option>Bagmati</option>
-              <option>Gandaki</option>
-              <option>Province 5</option>
-              <option>Sudur Pashchim</option>
-              <option>Karnali</option>
-            </select>
-            <label class="select-title" for="province"> District:</label>
-            <select class="form-control" id="district" onchanged="abc(this.id)">
-            
-            </select>
-            
+                <label class="select-title" for="province">Select ROI:</label>
+                <select class="form-control" id="province" onchange="populate_district(this.id,district)">
+                <option>Province One</option>
+                <option>Province Two</option>
+                <option>Bagmati</option>
+                <option>Gandaki</option>
+                <option>Province 5</option>
+                <option>Sudur Pashchim</option>
+                <option>Karnali</option>
+                </select>
+                <label class="select-title" for="province"> District:</label>
+                    <select class="form-control" id="district" onchanged="abc(this.id)">
+                    
+                    </select>
           </div>
-         </div>
-
-          
-
+        </div>
         <div class="tab-pane fade" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
-        <div class="file-upload-wrapper">
-          <button class="btn btn-primary" onclick="getData()">Upload File</button>
-        </div>
-      
-        </div>
-
-          <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
-           <h4>Use Draw a Rectangle button to draw region of interest</h4>
-        </div>
-
-      </div>
-            {% comment %} ----------- upto here ------------  {% endcomment %}
-         </div>
-
-           
-            <div class="col-lg-8 upper-middle" id="mapid">
-                
-            </div>
-            <div class="col-lg-2 upper-right">
-                <div class="checkbox-title"><label class="checkbox-title">Layers</label><br></div>
-                 <label class="checkbox-inline"><input type="checkbox" value="">Forest Loss</label><br>
-                <label class="checkbox-inline"><input type="checkbox" value="">Forest Gain</label><br>
-                <label class="checkbox-inline"><input type="checkbox" value="">Forest Biomass</label>
-            </div>
-        </div>
-        <hr class="divisor">
-        <div class="row">
-            <div class="col-lg-2 lower-left">
-                Div 4
-            </div>
-            <div class="col-lg-8 lower-middle">
-               <div class='row'>
-                  <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                      <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#detail-first" role="tab" aria-controls="nav-first" aria-selected="true">Item One</a>
-                      <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#detail-second" role="tab" aria-controls="nav-second" aria-selected="false">Item Two</a>
-                      <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-third" role="tab" aria-controls="nav-third" aria-selected="false">Item Three</a>
-                      <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-fourth" role="tab" aria-controls="nav-third" aria-selected="false">Item Four</a>
-                      <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-fifth" role="tab" aria-controls="nav-third" aria-selected="false">Item Five</a>
-                    </div>
-                  </nav>
-                </div>
-                <div class="tab-pane fade show active" id="detail-first" role="tabpanel" aria-labelledby="nav-first-tab">
-
-                <h1>Heading One</h1>
-                </div>
-                <div class="tab-pane fade" id="detail-second" role="tabpanel" aria-labelledby="nav-second-tab">
-                <h2>Heading Two</h2>
-              </div>
-
-              <div class="tab-pane fade" id="detail-third" role="tabpanel" aria-labelledby="nav-third-tab">
-                <h3>Heading Three</h3>
-              </div>
-              <div class="tab-pane fade" id="detail-fourth" role="tabpanel" aria-labelledby="nav-third-tab">
-                <h4>Heading Four</h4>
-              </div>
-              <div class="tab-pane fade" id="detail-fifth" role="tabpanel" aria-labelledby="nav-third-tab">
-                <h5>Heading Five</h5>
-              </div>
-                  </div>
-            <div class="col-lg-2 lower-right">
-                Div 6
-            </div>
-        </div>
+          <div class="file-upload-wrapper">
+            <button class="btn btn-primary" onclick="getData()">Upload File</button>
+          </div>
+          </div>
+            <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
+             <h4>Use Draw buttons to draw region of interest</h4>
+          </div>
     </div>
-    <script src="{% static "js/map.js" %}"></script>
+    </div>
+    <div class="ui-layout-center">
+      <div id="mapid"></div>
+    </div>
+    <div class="ui-layout-east">
+      <div class="checkbox-title"><label class="checkbox-title">Layers</label><br></div>
+        <label class="checkbox-inline"><input type="checkbox" value="">Forest Loss</label><br>
+        <label class="checkbox-inline"><input type="checkbox" value="">Forest Gain</label><br>
+        <label class="checkbox-inline"><input type="checkbox" value="">Forest Biomass</label>
+    </div>
+    <div class="ui-layout-south">
+      <div class="ui-layout-west"></div>
+      <div class="ui-layout-center">
+          <div class='row'>
+            <nav>
+              <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-first-tab" data-toggle="tab" href="#detail-first" role="tab" aria-controls="nav-first" aria-selected="true">Item One</a>
+                <a class="nav-item nav-link" id="nav-second-tab" data-toggle="tab" href="#detail-second" role="tab" aria-controls="nav-second" aria-selected="false">Item Two</a>
+                <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-third" role="tab" aria-controls="nav-third" aria-selected="false">Item Three</a>
+                <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-fourth" role="tab" aria-controls="nav-third" aria-selected="false">Item Four</a>
+                <a class="nav-item nav-link" id="nav-third-tab" data-toggle="tab" href="#detail-fifth" role="tab" aria-controls="nav-third" aria-selected="false">Item Five</a>
+              </div>
+            </nav>
+          </div>
+          <div class="tab-pane fade show active" id="detail-first" role="tabpanel" aria-labelledby="nav-first-tab">
+
+          <h1>Heading One</h1>
+          </div>
+          <div class="tab-pane fade" id="detail-second" role="tabpanel" aria-labelledby="nav-second-tab">
+          <h2>Heading Two</h2>
+        </div>
+
+        <div class="tab-pane fade" id="detail-third" role="tabpanel" aria-labelledby="nav-third-tab">
+          <h3>Heading Three</h3>
+        </div>
+        <div class="tab-pane fade" id="detail-fourth" role="tabpanel" aria-labelledby="nav-third-tab">
+          <h4>Heading Four</h4>
+        </div>
+        <div class="tab-pane fade" id="detail-fifth" role="tabpanel" aria-labelledby="nav-third-tab">
+          <h5>Heading Five</h5>
+        </div>
+      </div>
+      <div class="ui-layout-east"></div>
+    </div>
+  </div>
+    
+       
+    </div>
+    <!-- --------- javascript ----------  -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
     <script src="https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.3.1/leaflet-omnivore.min.js"></script>
+    <script src={% static "js/jquery-ui.min.js" %}></script>
+    <script src={% static "js/layout.js" %}></script>
+    <script src={% static "js/main.js" %}></script>
+    <script src={% static "js/dropzone.js" %}></script>
+    <script src="{% static "js/nepal_district.geojson" %}"></script>
+    <script src="{% static "js/map.js" %}"></script>
     <script>
-<<<<<<< HEAD
-        var mymap = L.map('mapid').setView([28.319,83.903], 6);
+      var mymap = L.map('mapid').setView([28.319,83.903], 6);
+      var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 18,
+          id: 'mapbox/streets-v11',
+          tileSize: 512,
+          zoomOffset: -1,
+          accessToken: 'pk.eyJ1IjoibG9zdGIxIiwiYSI6ImNqaTBjcGd4bjE2cGMza3M2MWEzcTRwd3gifQ.Ps6yKHol2bmEPndMSeYKKw'
+      }).addTo(mymap);
 
+         var paddy2017 = L.tileLayer('{{ tile2017 }} ', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
 
-var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox/streets-v11',
-    tileSize: 512,
-    zoomOffset: -1,
-    accessToken: 'pk.eyJ1IjoibG9zdGIxIiwiYSI6ImNqaTBjcGd4bjE2cGMza3M2MWEzcTRwd3gifQ.Ps6yKHol2bmEPndMSeYKKw'
-}).addTo(mymap);
+      var paddy2019 = L.tileLayer('{{ tile2019 }} ', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
 
-var CO_emission = L.tileLayer('{{ tile }} ', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    maxZoom: 24,
-}).addTo(mymap);
+      var paddy2018 = L.tileLayer('{{ tile2018 }}' , {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
 
-var baseMaps1 = {
-    "OSM" :basemap,
-};
-var RenderedMap = {
-    "CO Emission" :CO_emission,
-};
-L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
-=======
->>>>>>> 99ee18c0a325df42a50ffdb66f284d7b29e3bbe0
+   
+
+      var baseMaps1 = {
+          "OSM" :basemap,
+      };
+      var RenderedMap = {
+          "Paddy 2017" :paddy2017,
+          "Paddy 2018" :paddy2018,
+          "Paddy 2019" :paddy2019,
+      };
+      L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
+
       function getData(){
-        var inputNode = document.createElement('input');
-            inputNode.setAttribute('type','file');
-            inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
-            inputNode.setAttribute('accept','.geojson');
+    var inputNode = document.createElement('input');
+        inputNode.setAttribute('type','file');
+        inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
+        inputNode.setAttribute('accept','.geojson');
 
-            inputNode.addEventListener("change", function(e){
-              var files = inputNode.files;
-              var file = files[0];
-              var reader = new FileReader();
-              reader.onload = function() {
-                var geo = omnivore.geojson(reader.result)
-                .on('ready',function(){
-                    mymap.fitBounds(geo.getBounds());
-                  })
-                .addTo(mymap);
-                };
-              reader.readAsDataURL(file);
-            });
-            inputNode.click();
-      }
-      function draw(){
-        var drawnItems = new L.FeatureGroup();
+        inputNode.addEventListener("change", function(e){
+          var files = inputNode.files;
+          var file = files[0];
+          var reader = new FileReader();
+          reader.onload = function() {
+            var geo = omnivore.geojson(reader.result)
+            .on('ready',function(){
+                mymap.fitBounds(geo.getBounds());
+              })
+            .addTo(mymap);
+            };
+          reader.readAsDataURL(file);
+        });
+        inputNode.click();
+  }
+var drawnItems;
+function draw(){
+    if(drawnItems==undefined){
+        drawnItems = new L.FeatureGroup();
         mymap.addLayer(drawnItems);
         var drawControl = new L.Control.Draw({
-              // position: 'topright',
+            // position: 'topright',
             draw: {
-                polygon: false,
+                polygon:  {
+                    shapeOptions: {
+                     color: 'red'
+                    },
+                   },
                 polyline: false,
                 rect: {
                 shapeOptions: {
-                  color: 'green'
+                color: 'green'
                 },
                 },
                 circle: false,
                 circlemarker: false,
                 marker: false
-              },
+            },
                 edit: {
                     featureGroup: drawnItems,
                     edit: false
@@ -235,7 +233,19 @@ L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
             var layer = e.layer;
         mymap.addLayer(layer);
         });
-      }
+    }else{return;}
+}
+      $(document).ready(function () {
+            $('#a-container').layout({
+              south__size: .30,
+              west__size: .20,
+              east__size: .20,
+              south__childOptions: {
+                  west__size: .20,
+                  east__size: .20
+			      }
+          });
+        });
     </script>
 </body>
 </html>
