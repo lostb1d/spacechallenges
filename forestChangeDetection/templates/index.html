@@ -57,7 +57,7 @@
         <div class="tab-pane fade show active" id="nav-first" role="tabpanel" aria-labelledby="nav-first-tab">
             <div class="form-group">
                 <label class="select-title" for="province">Select ROI:</label>
-                <select class="form-control" id="province">
+                <select class="form-control custom-control" id="province">
                 <option value="1">Province One</option>
                 <option value="2">Province Two</option>
                 <option value="3">Bagmati</option>
@@ -66,10 +66,6 @@
                 <option value="6">Sudur Pashchim</option>
                 <option value="7">Karnali</option>
                 </select>
-                <label class="select-title" for="province"> District:</label>
-                    <select class="form-control" id="district" onchanged="abc(this.id)">
-                    
-                    </select>
           </div>
         </div>
         <div class="tab-pane fade" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
@@ -140,12 +136,8 @@
     <script src="{% static "js/nepal_district.geojson" %}"></script>
     <script src="{% static "js/map.js" %}"></script>
     <script>
-<<<<<<< HEAD
       var province;
-      var mymap = L.map('mapid').setView([28.319,83.903], 6);
-=======
       var mymap = L.map('mapid').setView([25.589,88.528], 6);
->>>>>>> 461bf25f1ec9fbc68d8c6d6c6a8f59e65494603c
       var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
@@ -168,7 +160,6 @@
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 24,
       }).addTo(mymap);
-<<<<<<< HEAD
 
 
       $('#province').on('change', function(){
@@ -195,26 +186,16 @@
       }
     );
 
-=======
-   
->>>>>>> 461bf25f1ec9fbc68d8c6d6c6a8f59e65494603c
-      var baseMaps1 = {
+    var baseMaps1 = {
         "OSM" :basemap,
       };
-<<<<<<< HEAD
       var RenderedMap = {
           "Country Layer": mywms,
           "Paddy 2017" :paddy2017,
           "Paddy 2018" :paddy2018,
           "Paddy 2019" :paddy2019,
-=======
-      var overlayMaps = {
-        "Paddy 2017" :paddy2017,
-        "Paddy 2018" :paddy2018,
-        "Paddy 2019" :paddy2019,
->>>>>>> 461bf25f1ec9fbc68d8c6d6c6a8f59e65494603c
       };
-      var mylayer = L.control.layers(baseMaps1, overlayMaps).addTo(mymap);
+      var mylayer = L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
 
 var drawnItems;
 function draw(){
