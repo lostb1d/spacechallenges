@@ -31,3 +31,4 @@ sqlparse==0.3.1
 uritemplate==3.0.1
 urllib3==1.25.9
 zope.interface==5.1.0
+PyGeoj==1.0.0

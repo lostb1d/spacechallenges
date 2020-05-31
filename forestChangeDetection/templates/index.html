@@ -73,9 +73,10 @@
           </div>
         </div>
         <div class="tab-pane fade" id="nav-second" role="tabpanel" aria-labelledby="nav-second-tab">
-          <div class="file-upload-wrapper">
-            <button class="btn btn-primary" onclick="getData()">Upload File</button>
-          </div>
+          <form enctype="multipart/form-data" method="post" action="">
+            {{ form.as_p }}
+            <input type="submit"/>
+          </form>
           </div>
             <div class="tab-pane fade" id="nav-third" role="tabpanel" aria-labelledby="nav-third-tab">
              <h4>Use Draw buttons to draw region of interest</h4>
@@ -139,8 +140,12 @@
     <script src="{% static "js/nepal_district.geojson" %}"></script>
     <script src="{% static "js/map.js" %}"></script>
     <script>
+<<<<<<< HEAD
       var province;
       var mymap = L.map('mapid').setView([28.319,83.903], 6);
+=======
+      var mymap = L.map('mapid').setView([25.589,88.528], 6);
+>>>>>>> 461bf25f1ec9fbc68d8c6d6c6a8f59e65494603c
       var basemap = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 18,
@@ -149,13 +154,7 @@
           zoomOffset: -1,
           accessToken: 'pk.eyJ1IjoibG9zdGIxIiwiYSI6ImNqaTBjcGd4bjE2cGMza3M2MWEzcTRwd3gifQ.Ps6yKHol2bmEPndMSeYKKw'
       }).addTo(mymap);
- {% comment %} debug here  {% endcomment %}
-         var paddy2017 = L.tileLayer('{{ tile2017 }} ', {
-          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-          maxZoom: 24,
-      }).addTo(mymap);
-
-      var paddy2019 = L.tileLayer('{{ tile2019 }} ', {
+        var paddy2017 = L.tileLayer('{{ tile2017 }}', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 24,
       }).addTo(mymap);
@@ -164,6 +163,12 @@
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
           maxZoom: 24,
       }).addTo(mymap);
+
+      var paddy2019 = L.tileLayer('{{ tile2019 }}', {
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          maxZoom: 24,
+      }).addTo(mymap);
+<<<<<<< HEAD
 
 
       $('#province').on('change', function(){
@@ -190,38 +195,27 @@
       }
     );
 
+=======
+   
+>>>>>>> 461bf25f1ec9fbc68d8c6d6c6a8f59e65494603c
       var baseMaps1 = {
-          "OSM" :basemap,
+        "OSM" :basemap,
       };
+<<<<<<< HEAD
       var RenderedMap = {
           "Country Layer": mywms,
           "Paddy 2017" :paddy2017,
           "Paddy 2018" :paddy2018,
           "Paddy 2019" :paddy2019,
+=======
+      var overlayMaps = {
+        "Paddy 2017" :paddy2017,
+        "Paddy 2018" :paddy2018,
+        "Paddy 2019" :paddy2019,
+>>>>>>> 461bf25f1ec9fbc68d8c6d6c6a8f59e65494603c
       };
-      L.control.layers(baseMaps1, RenderedMap).addTo(mymap);
+      var mylayer = L.control.layers(baseMaps1, overlayMaps).addTo(mymap);
 
-      function getData(){
-    var inputNode = document.createElement('input');
-        inputNode.setAttribute('type','file');
-        inputNode.setAttribute('id','leaflet-draw-shapefile-selector');
-        inputNode.setAttribute('accept','.geojson');
-
-        inputNode.addEventListener("change", function(e){
-          var files = inputNode.files;
-          var file = files[0];
-          var reader = new FileReader();
-          reader.onload = function() {
-            var geo = omnivore.geojson(reader.result)
-            .on('ready',function(){
-                mymap.fitBounds(geo.getBounds());
-              })
-            .addTo(mymap);
-            };
-          reader.readAsDataURL(file);
-        });
-        inputNode.click();
-  }
 var drawnItems;
 function draw(){
     if(drawnItems==undefined){
